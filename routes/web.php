@@ -16,3 +16,11 @@ Route::get('/', function () {
 });
 
 Route::get('/user', 'UserController@index');
+
+Route::get('/sms', 'TestController@sendsms');
+
+Route::namespace('Homeowner')->prefix('homeowner')->group(function () {
+    Route::get('category','CategoryController@get');
+
+    Route::get('house/{owner?}','HouseController@get');//获取业主房屋地址
+});
