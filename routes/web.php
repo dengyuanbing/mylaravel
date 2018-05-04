@@ -32,4 +32,6 @@ Route::namespace('Homeowner')->prefix('homeowner')->group(function () {
 
     /***************提交 *************************************/
     Route::post('house/create','HouseController@create');//创建房屋信息
+
+    Route::post('repairorders/create','RepairordersController@create');//创建报修单
 });

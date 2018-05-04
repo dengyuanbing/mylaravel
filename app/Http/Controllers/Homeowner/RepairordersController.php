@@ -19,21 +19,26 @@ class RepairordersController extends Controller
         foreach ($repair_orders as $order) {
             $house = House::find($order->fcbh);
             $order->house = $house->sheng.$house->shi.$house->qu.$house->xxdz;
-            $tasks = $order->hasMany('App\Homeowner\Task','bxdbh','ID');
-            dd($tasks);
-            if($tasks->related){
+//            $tasks = $order->hasMany('App\Homeowner\Task','bxdbh','ID');
+            $tasks = $order->task;
+//            dd($tasks);
+            if($tasks->count()){
                 foreach($tasks as $task){
-                    dd($task);
                     $worker = DB::table('t_weixiuyuan')->where('ID','=',$task->weixiuyuan)->first();
                     $order->worker_name = $worker->xingming;
                     $order->worker_phone = $worker->shouji;
-                    dd($order);
+                    unset($order->task);
                     $response[] = $order;
                 }
             }else{
                 $response[] = $order;
             }
         }
-        dd($response);
+        return response()->json($response);
+    }
+
+    public function create(Request $request){
+       header('Access-Control-Allow-origin:*');
+        var_dump($_POST);
     }
 }

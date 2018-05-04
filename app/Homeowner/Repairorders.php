@@ -14,4 +14,8 @@ class Repairorders extends Model
     protected $primaryKey = 'ID';
 
     public $incrementing=false;//主键为非自增
+
+    public function task(){
+        return $this->hasMany('App\Homeowner\Task','bxdbh','ID');
+    }
 }
