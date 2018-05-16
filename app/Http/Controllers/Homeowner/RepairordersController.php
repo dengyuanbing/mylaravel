@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Homeowner;
 
+use Illuminate\Contracts\Session\Session;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Homeowner\Repairorders;
@@ -15,6 +16,12 @@ class RepairordersController extends Controller
     public function get(Request $request){
         $owner_id = $request->ownerid;
         $repair_orders = Repairorders::where('yzbh','=',$owner_id)->select(['ID','ejfl','fcbh','createdate','zhuangtai'])->get();
+        $repair_order = Repairorders::where('yzbh','=',$owner_id)->select(['ID','ejfl','fcbh','createdate','zhuangtai'])->first();
+//        dd($repair_order->toarray());
+//        session('order',$repair_order->toarray());
+//        Session::put('order',$repair_order);
+        dd(session('order'));
+        
         $response = array();
         foreach ($repair_orders as $order) {
             $house = House::find($order->fcbh);
